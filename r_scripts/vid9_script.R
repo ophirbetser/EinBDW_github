@@ -71,3 +71,40 @@ diam[, .N,
 
 diam[, .(A = uniqueN(carat), NUM = .N),
      by = .(color)]
+
+
+# order
+
+piv_1 <- 
+  diam[, .N, by = .(color)]
+
+piv_1[order(-N)]
+
+setorder(piv_1, N)
+
+# setnames
+
+setnames(piv_1, "N", "NUM_OF_ROWS")
+setnames(piv_1, c("NUM_OF_ROWS", "color"), c("N", "Color"))
+
+# chaning
+diam[, .N, by = .(color)][order(N)][, .(sum(N))]
+
+diam[, .(sum_of_price = sum(price)), by = .(color)][, 
+    ":="(tot_sum = sum(sum_of_price))][,
+    ":="(prop = sum_of_price / tot_sum)][order(prop)]
+
+# choose first of last row per group
+diam[order(color, price)][, .SD[1], by = color]
+
+diam[order(color, price)][, .SD[.N], by = color]
+
+diam[order(color, price)][, .SD[c(1, .N)], by = color]
+
+# shift
+
+iris_dt[, ":="(reg_shift_SW = shift(Sepal.Width))]
+iris_dt[, ":="(reg_shift_SW_4 = shift(Sepal.Width, 4))]
+iris_dt[, ":="(reg_shift_SW_min_2 = shift(Sepal.Width, -2))]
+
+iris_dt[, ":="(reg_shift_SW_by_group = shift(Sepal.Width)), by = Species]
