@@ -53,3 +53,38 @@ uber$time %>% second()
 uber$time_floor <- floor_date(uber$time, "2 hours")
 
 uber[, .N, by = time_floor]
+
+
+
+ggplot2::diamonds
+
+table(diamonds$cut)
+table(diamonds$cut, diamonds$color)
+table(diamonds$color, diamonds$cut)
+
+
+prop.table(table(diamonds$cut, diamonds$color))
+prop.table(table(diamonds$cut, diamonds$color), 1)
+prop.table(table(diamonds$cut, diamonds$color), 2)
+0.10124224 + 0.13913043 + 0.19378882 + 0.19503106  + 0.18819876  +0.10869565 + 0.07391304
+
+
+round(prop.table(table(diamonds$cut, diamonds$color), 1), 2)
+
+
+my_data <- prop.table(table(diamonds$cut, diamonds$color))
+my_data <- as.data.frame(my_data)
+
+
+
+model <- lm(y ~ x, data = diamonds)
+model %>% summary()
+
+diamonds
+cor(diamonds$x, diamonds$y)
+
+diamonds
+cor(diamonds[, c("price","x","y","z")])
+
+cor
+
