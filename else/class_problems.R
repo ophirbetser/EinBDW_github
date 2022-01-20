@@ -1,4 +1,7 @@
+# class_problems
+## link to questions:
 
+## https://github.com/ophirbetser/EinBDW_github/blob/master/else/class_problems.pdf
 
 # A
 # 1
@@ -193,3 +196,122 @@ f <- function(mat){
 }
   
 f(matrix(rnorm(100), 10, 10))  
+
+# C
+
+# 1
+count.char <- function(st, ch){
+  sum(strsplit(st, "")[[1]] == rep(ch, nchar(st)))
+}
+
+# 2
+f <- function(st){
+  sum(!strsplit(st, "")[[1]] %in% c(letters, LETTERS))
+}
+
+# 3
+for(num in c(3, 5, 1, 2)){
+  print(paste0(rep("*", num), collapse = ""))
+}
+
+# 4
+print.sum <- function(num_v){
+  print(
+    paste0(paste0(num_v, collapse = " + "), " = ", sum(num_v))
+  )
+}
+
+# 5
+n <- 10
+for(i in 1:n){
+  write(
+    paste0(rep("*", i), collapse = ""),
+    file = paste0("junk/ophir", i, ".txt")
+    )
+}
+
+# 6
+f <- function(s, ch){
+  if(ch %in% strsplit(s, "")[[1]]){
+    return(which.max((strsplit(s, "")[[1]] == ch)))
+  } else{
+    return(0)
+  }
+}
+
+
+# D
+
+# 1
+pacman::p_load(
+  matlab
+)
+a <- 1
+b <- 1000
+
+for(i in seq(a, b-2, 1)){
+  if(isprime(i) & isprime(i+2)){
+    print(paste0(i, " , ", i+2))
+  }
+}
+
+# 2
+perfect.number <- function(n){
+  sum <- 0
+  for(i in 1:(n-1)){
+    if(n %% i == 0){
+      sum <- sum + i
+    }
+  }
+  return(sum == n)
+}
+
+perfect.number(8128)
+
+# 3
+digit.sum <- function(num){
+  if(num < 10){
+    return(num)
+  }
+  return(
+    digit.sum(
+      sum(as.numeric(strsplit(as.character(num), "")[[1]]))
+    )
+  )
+}
+
+# 4
+
+
+
+# 5
+
+right_id <- function(st){
+  if(nchar(st) != 8){
+    return(
+    paste0(
+      paste0(rep("0", 8 - nchar(st)), collapse = ""),
+      st
+    )
+    )
+  } else{
+    return(st)
+  }
+}
+
+find.check.digit <- function(id){
+  res1 <- as.numeric(strsplit(right_id(as.character(id)), "")[[1]]) * rep(1:2, 4)
+  res2 <-paste0(as.character(res1), collapse = "")
+  return(10 - (sum(as.numeric(strsplit(res2, "")[[1]])) %% 10) %% 10)
+  
+}
+
+verify.check.digit <- function(id){
+  last_ch <- 
+    substr(as.character(id), nchar(as.character(id)), nchar(as.character(id)))
+  without_last_ch <- 
+    substr(as.character(id), 1, nchar(as.character(id)) - 1)
+  
+  return(find.check.digit(without_last_ch) == as.numeric(last_ch))
+}
+  
