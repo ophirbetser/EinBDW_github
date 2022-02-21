@@ -1,0 +1,63 @@
+---
+title: "Untitled"
+author: "Ophir Betser"
+date: "2/10/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+*italic*   **bold**
+
+_italic_   __bold__
+
+# Header 1
+
+## Header 2
+
+### Header 3
+
+#### Header 4
+
+* Item 1
+* Item 2
+    + Item 2a
+    + Item 2b
+
+1. Item 1
+2. Item 2
+3. Item 3
+    + Item 3a
+    + Item 3b
+
+balh balh balh  
+asdasd asdasd asdasd
+
+$$y = a + b \cdot x $$
+
+$$\hat y_i = \hat a + \hat b \cdot x_i + \epsilon_i $$
+
+hello this is $n$, the number of rows in iris: `r nrow(iris)`
+
+```{r cars, echo=FALSE}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+$$
+\min_{a,b} \sum_{i = 1}^n (y_i - (a + b \cdot x_i))^2
+$$

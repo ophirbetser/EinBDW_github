@@ -385,4 +385,3 @@ map %>%
     lng = ~x, lat= ~y,
     color = "red"
   )
-

@@ -1,0 +1,67 @@
+---
+title: "סיכום העבודה שלי"
+author: "אופיר בצר"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+    code_download: true
+---
+
+```{css echo=FALSE}
+h1 { text-align:right; color:#296993;}
+p, h2, h3, h4, li { text-align:right; dir:rtl}
+```
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+pacman::p_load(
+            data.table,
+            tidyverse,
+            openxlsx,
+            DT,
+            skimr,
+            shiny,
+            visdat)
+```
+
+# סיכום על איריס דאטה סט
+
+### א
+שלום לכולם, אני מוסיף סתם טקסט
+
+### ב
+
+### ג
+
+```{r}
+skim(iris)
+```
+
+```{r}
+vis_dat(iris)
+```
+
+# בואו ניצור את הגרפים
+
+```{r message=F, warning=F}
+GGally::ggpairs(iris)
+```
+
+# בואו נבנה את המודל
+
+```{r}
+model <- lm(Sepal.Length ~ ., data = iris)
+```
+
+# ועכשיו, בואו נראה את התוצאות שלו!
+
+<center>
+```{r, results='asis'}
+stargazer::stargazer(model, type = "html")
+```
+</center>

@@ -1,0 +1,53 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+pacman::p_load(
+            data.table,
+            tidyverse,
+            openxlsx,
+            lubridate,
+            skimr,
+            DT,
+            shiny,
+            visdat)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+iris %>% ggplot() +
+  aes(Sepal.Length,Sepal.Width) +
+  geom_point()
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+iris %>% ggplot() +
+  aes(Sepal.Length,Sepal.Width) +
+  geom_point()
+
+```
+
+### Chart C
+
+```{r}
+iris %>% ggplot() +
+  aes(Sepal.Length,Sepal.Width) +
+  geom_point()
+
+```
+

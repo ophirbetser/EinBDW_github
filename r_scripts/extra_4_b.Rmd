@@ -1,0 +1,68 @@
+---
+title: "My work - Iris"
+author: "Ophir Betser"
+date: "2/10/2022"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+    code_download: true
+---
+
+```{css}
+h1 {color: red}
+p {color: green}
+```
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+pacman::p_load(
+            data.table,
+            tidyverse,
+            openxlsx,
+            DT,
+            skimr,
+            shiny,
+            visdat)
+```
+
+# iris summary
+
+### a
+
+### b
+
+### c
+
+```{r}
+skim(iris)
+```
+
+```{r}
+vis_dat(iris)
+```
+
+# lets see plots!
+
+```{r message=F, warning=F}
+GGally::ggpairs(iris)
+```
+
+# lets create model!
+
+my model is $y = a + bx$
+
+```{r}
+model <- lm(Sepal.Length ~ ., data = iris)
+```
+
+# and view the results!
+
+```{r, results='asis'}
+stargazer::stargazer(model, type = "html")
+```
+

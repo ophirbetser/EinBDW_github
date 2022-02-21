@@ -84,9 +84,4 @@ dt$x[dt$x > 500] <- 10
 
 
 
-list$host_since
 
-list[, cumsum(1)]
-list[, ":="(one = 1)]
-list[, ":="(cumsum = cumsum(one))]
-list[, ":="(rollmean = cumsum(one))]
