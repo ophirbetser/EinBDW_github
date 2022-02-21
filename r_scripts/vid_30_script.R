@@ -115,31 +115,30 @@ ex_df[,
         runner_mean_no_k = runner(x, f = mean),
         runner_mean_k_2 = runner(x, f = mean, k = 2),
         runner_mean_k_3 = runner(x, f = mean, k = 3),
-        runner_mean_k_5 = runner(x, f = mean, k = 5)
+        runner_mean_k_5 = runner(x, f = mean, k = 5),
+        roll_cor = roll_cor(x, 1:20, width = 5)
       )
 ]
 
+######
+ex_df %>% 
+  select(-x) %>% 
+  rownames_to_column() %>% 
+  melt(id.vars = "rowname") %>% 
+  ggplot() +
+  aes(
+    x = rowname, 
+    y = value,
+    color = variable,
+    group = 
+  ) +
+  geom_line()
+
 # how many bus trips was in 2014?
-ex_df <- 
-  data.table(
-    x = rep(c(1:5), 4)
-  )
-
-ex_df %>% gt()
-ex_df[,
-      ":="(
-        runner_sum_no_k = runner(x, f = sum),
-        runner_mean_no_k = runner(x, f = mean),
-        runner_mean_k_2 = runner(x, f = mean, k = 2),
-        runner_mean_k_3 = runner(x, f = mean, k = 3),
-        runner_mean_k_5 = runner(x, f = mean, k = 5)
-      )
-      ]
-
 ggplot(sub_dt) +
   aes(
     x = date,
-    y = bus - mean_by_wday,
+    y = runner(sub_dt$bus, f = mean, k = 14),
     color = factor(wday)
   ) +
   geom_point()
@@ -164,9 +163,6 @@ weights <- 0.9 ^ (n:1)
 roll_lm(x, y, width = 5)
 
 
-
-cumsum(1:10
-
 runner(
   1:10,
   sum
@@ -178,19 +174,4 @@ win_size = 3
 dt[1:20, .(roll_sum = roll::roll_sum(bus, width = win_size),
        runner = runner(bus, f = sum, k = win_size))]
 
-
-
-runner(
-  x = iris,
-  k = 4,
-  mean(iris$Sepal.Length)
-)
-runner(
-  letters[1:15],
-  f = paste,
-  collapse = " > "
-)
-
-
-?data.table::frollsum()
 
