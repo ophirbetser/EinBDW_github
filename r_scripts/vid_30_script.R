@@ -59,52 +59,67 @@ ggplot(dt) +
 # better...
 ggplot(dt) +
   aes(
-    x = date,
+    x = wday,
     y = bus,
     color = factor(wday)
   ) +
   geom_boxplot()
 
 
+ggplot(dt) +
+  aes(
+    x = factor(wday),
+    y = bus
+  ) +
+  stat_summary(fun.data="mean_sdl", fun.args = list(mult=2), 
+               geom="errorbar", width=0.25) +
+  geom_jitter(aes(color = factor(wday)),width = 0.15, alpha = 0.2) +
+  theme_classic()
+
+
+ggplot(dt[year %between% c(2001, 2005)]) +
+  aes(
+    x = factor(wday),
+    y = bus
+  ) +
+  stat_summary(fun.data="mean_sdl", fun.args = list(mult=2), 
+               geom="errorbar", width=0.25) +
+  geom_jitter(aes(color = factor(wday)),width = 0.1, alpha = 0.5) +
+  theme_classic() +
+  facet_grid(year~.)
+
 
 #---#
 #clean up by group
 
 sub_dt <- dt[year == 2012]
-sub_dt[, mean_by_wday := mean(bus), by = wday]
+sub_dt[, res_wday := bus - mean(bus), by = wday]
 
 ggplot(sub_dt) +
   aes(
     x = date,
-    y = bus - mean_by_wday, # lm(bus ~ factor(wday), data = sub_dt)$residuals
+    y = res_wday, # lm(bus ~ factor(wday), data = sub_dt)$residuals
     color = factor(wday)
   ) +
-  geom_point()
+  geom_point() +
+  theme_classic() +
+  scale_y_continuous(limits = c(-800000, 500000))
 
 sub_dt[, not_outlier := bus %between% c(quantile(bus, 0.05), quantile(bus, 0.99)), by = wday]
 sub_dt[not_outlier == TRUE][, .N, by = wday]
 
-sub_dt <- sub_dt[not_outlier == TRUE]
-
-
-#take a look:
-ggplot(sub_dt) +
-  aes(
-    x = date,
-    y = bus - mean_by_wday,
-    color = factor(wday)
-  ) +
-  geom_point()
+sub_dt_clean <- sub_dt[not_outlier == TRUE]
 
 #----#
 
 # window functions:
-?runner::runner
+?runner::runner # https://cran.r-project.org/web/packages/runner/vignettes/apply_any_r_function.html
 ?roll::roll_cor
 
 
 ex_df <- 
   data.table(
+    index = 1:20,
     x = rep(c(1:5), 4)
   )
 
@@ -118,60 +133,21 @@ ex_df[,
         runner_mean_k_5 = runner(x, f = mean, k = 5),
         roll_cor = roll_cor(x, 1:20, width = 5)
       )
-]
+] %>% gt
 
-######
-ex_df %>% 
-  select(-x) %>% 
-  rownames_to_column() %>% 
-  melt(id.vars = "rowname") %>% 
-  ggplot() +
-  aes(
-    x = rowname, 
-    y = value,
-    color = variable,
-    group = 
-  ) +
-  geom_line()
 
-# how many bus trips was in 2014?
+
 ggplot(sub_dt) +
-  aes(
-    x = date,
-    y = runner(sub_dt$bus, f = mean, k = 14),
-    color = factor(wday)
-  ) +
-  geom_point()
+  geom_line(aes(x = date, y = bus))
 
+ggplot(sub_dt[wday %in% 2:6]) +
+  geom_line(aes(x = date, y = bus))
 
-
-
-d <- dt[1:10]
-d[, .(runner(bus, k = 5, sum))]
-
-
-dt[,roll_cor := roll::roll_cor(bus, rail_boardings, width = 10)]
-?roll_cor
-
-
-
-n <- 15
-x <- rnorm(n)
-y <- rnorm(n)
-weights <- 0.9 ^ (n:1)
-# rolling regressions with complete windows
-roll_lm(x, y, width = 5)
-
-
-runner(
-  1:10,
-  sum
-)
-
-
-win_size = 3
-
-dt[1:20, .(roll_sum = roll::roll_sum(bus, width = win_size),
-       runner = runner(bus, f = sum, k = win_size))]
+ggplot(sub_dt[wday %in% 2:6]) +
+  geom_point(aes(x = date, y = bus)) +
+  geom_line(aes(x = date, y = runner(bus, f = mean, k = 7)), color = "purple") +
+  geom_line(aes(x = date, y = runner(bus, f = mean, k = 14)), color = "green") +
+  geom_line(aes(x = date, y = mean(bus)), color = "red") +
+  theme_classic()
 
 
