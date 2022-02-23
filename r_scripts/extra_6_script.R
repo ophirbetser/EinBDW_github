@@ -1,29 +1,30 @@
-# openxlsx
-
-# link
-# https://ycphs.github.io/openxlsx/index.html
-
-#load:
+# load pack
 pacman::p_load(
-  openxlsx,
-  here,
-  ggplot2
+  rsthemes
 )
 
-# example
-wb <- createWorkbook()
 
-addWorksheet(wb = wb, sheetName = "sheet_a")
-writeData(wb = wb, sheet = "sheet_a", x = iris)
+(1*(((2+3)*4)+6))+7
 
-addWorksheet(wb = wb, sheetName = "sheet_b")
-writeData(wb = wb, sheet = "sheet_b", x = mtcars, xy = c("B", 2))
+# download extra themes
+rsthemes::install_rsthemes(include_base16 = TRUE)
 
-addWorksheet(wb = wb, sheetName = "sheet_c")
-writeData(wb = wb, sheet = "sheet_c", x = datasets::WorldPhones)
-ggplot(iris) + aes(Sepal.Length,Sepal.Width) + geom_point()
-insertPlot(wb, sheet = "sheet_c", xy = c("E", 2))
+# list installed themes
+rsthemes::list_rsthemes()
 
-openXL(wb) ## view without saving
-saveWorkbook(wb, here("datasets", "openxlsx_e1.xlsx"), overwrite = TRUE) # save
+# Try all themes
+rsthemes::try_rsthemes()
 
+#------#
+# Where does R store packages?
+.libPaths()
+
+# open terminal:
+# mac shift+option+r
+# win: (not sure) shift+alt+t
+
+# lets see the files:
+# cmd: open /Library/Frameworks/R.framework/Versions/4.1/Resources/library
+
+# edit theme:
+# cmd: open /Library/Frameworks/R.framework/Versions/4.1/Resources/library/rsthemes/themes/a11y-dark.rstheme

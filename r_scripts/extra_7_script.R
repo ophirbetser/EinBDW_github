@@ -1,22 +1,29 @@
+# openxlsx
+
+# link
+# https://ycphs.github.io/openxlsx/index.html
+
+#load:
 pacman::p_load(
-  clipr,
-  datapasta
+  openxlsx,
+  here,
+  ggplot2
 )
 
-# copy last
-mtcars
-clipr::write_last_clip()
+# example
+wb <- createWorkbook()
 
-# copy object
-clipr::write_clip(iris)
+addWorksheet(wb = wb, sheetName = "sheet_a")
+writeData(wb = wb, sheet = "sheet_a", x = iris)
 
-# what is in my clipboard?
-clipr::read_clip()
-dt <- clipr::read_clip_tbl()
+addWorksheet(wb = wb, sheetName = "sheet_b")
+writeData(wb = wb, sheet = "sheet_b", x = mtcars, xy = c("B", 2))
 
+addWorksheet(wb = wb, sheetName = "sheet_c")
+writeData(wb = wb, sheet = "sheet_c", x = datasets::WorldPhones)
+ggplot(iris) + aes(Sepal.Length,Sepal.Width) + geom_point()
+insertPlot(wb, sheet = "sheet_c", xy = c("E", 2))
 
-# paste clipboard as text in r script
-clipr::write_clip(iris)
-datapasta::tribble_paste()
-datapasta::dt_paste()
+openXL(wb) ## view without saving
+saveWorkbook(wb, here("datasets", "openxlsx_e1.xlsx"), overwrite = TRUE) # save
 
