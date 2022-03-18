@@ -149,5 +149,3 @@ ggplot(sub_dt[wday %in% 2:6]) +
   geom_line(aes(x = date, y = runner(bus, f = mean, k = 14)), color = "green") +
   geom_line(aes(x = date, y = mean(bus)), color = "red") +
   theme_classic()
-
-
