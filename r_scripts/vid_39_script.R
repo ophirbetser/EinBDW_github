@@ -34,6 +34,7 @@ cohort_dt %>% skim()
 
 ## fix date
 cohort_dt$Date <- mdy(cohort_dt$Date)
+cohort_dt$Date %>% summary()
 
 ## order the data by CustomerID + Date
 setorder(cohort_dt, CustomerID, Date)
@@ -201,9 +202,10 @@ cohort_dt[,
        by = cohort][order(cohort)] %>% gt()
 
 # clearing env ----
-rm(list = ls())         # Clear environment                           
-pacman::p_unload(all)   # Clear packages                  
-dev.off()               # Clear plots      
-cat("\014")             # Clear console               
+## rm(list = ls())         # Clear environment                           
+## pacman::p_unload(all)   # Clear packages                  
+## dev.off()               # Clear plots      
+## cat("\014")             # Clear console               
+### .rs.restartR()         # restart R studio                    
 
 
