@@ -15,6 +15,7 @@ locations_with_labs <-
     )
 
 locations <- locations_with_labs[, -3]
+
 # get unique coordinates
 locations_distinct <- locations %>%
   distinct_all()
