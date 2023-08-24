@@ -38,7 +38,7 @@ dt_for_k_means <-
 # “scale”: Divide by standard deviation.
 # “standardize”: Center and scale.
 # “range”: Scale to a given range.
-dt_for_k_means <- normalize(dt_for_k_means, method = "standardize") # method: 
+dt_for_k_means <- normalize(data.frame(dt_for_k_means), method = "standardize") # method: 
 
 
 # creat the model
